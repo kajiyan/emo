@@ -1,0 +1,6 @@
+[submodule "experiments/shared/js/axios"]
+	path = experiments/shared/js/axios
+	url = https://github.com/axios/axios.git
+[submodule "experiments/shared/js/JavaScript-Load-Image"]
+	path = experiments/shared/js/JavaScript-Load-Image
+	url = https://github.com/blueimp/JavaScript-Load-Image.git

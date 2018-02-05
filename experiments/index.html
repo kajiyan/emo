@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/polyfill.min.js"></script>
+  <script src="shared/js/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+  <script src="shared/js/axios/dist/axios.min.js"></script>
+  <script src="js/third-party.js"></script>
+  <script src="js/key-min.js"></script>
+  <script src="js/main-min.js"></script>
+</head>
+<body>
+
+  <div class="media_Outer">
+    <div class="media">
+      <div class="media_Inner">
+        <div class="media-Resources">
+          <div class="media-Resource media-Resource-camera">
+            <div class="cntl">
+              <div class="cntl_Inner">
+                <div class="cntl_BtnContainer">
+                  <button id="js-cntl_Btn-shooting" class="cntl_Btn cntl_Btn-shooting" type="button">
+                    <span class="cntl_BtnLabel">撮影</span>
+                  </button>
+                </div>
+                <!--
+                <div class="cntl_BtnContainer">
+                  <button id="js-cntl_Btn-toggle" class="cntl_Btn cntl_Btn-toggle" type="button">
+                    <span class="cntl_BtnLabel">カメラを切り替える</span>
+                  </button>
+                </div>
+                -->
+              </div><!-- /.cntl_Inner -->
+            </div><!-- /.cntl -->
+            <div class="sw-SR-only_">
+              <canvas id="js-media_Canvas" class="media_Canvas"></canvas>
+              <video id="js-media_Camera" class="media_Camera" autoplay playsinline></video>
+            </div>
+          </div><!-- /.media-Resource-camera -->
+
+          <div class="sw-SR-only">
+            <div id="js-media-Resource-file" class="media-Resource media-Resource-file dbg-Border">
+              <div class="media-Resource_Inner">
+                <input id="js-media_File" class="media_File" type="file">
+                <p>Or drag &amp; drop an jpeg image file</p>
+              </div><!-- /.media-Resource_Inner -->
+            </div><!-- /.media-Resource -->
+          </div>
+        </div><!-- /.media-Resources -->
+      </div><!-- /.media_Inner -->
+    </div><!-- /.media -->
+  </div><!-- /.media_Outer -->
+
+
+  <div id="js-media_Src"></div>
+  <div id="js-media_Emotion"></div>
+
+
+</body>
+</html>
