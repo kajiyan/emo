@@ -24,6 +24,10 @@
     const $$canvas = document.getElementById('js-media_Canvas');
     const $$shootingBtn = document.getElementById('js-cntl_Btn-shooting');
     const $$toggleBtn = document.getElementById('js-cntl_Btn-toggle');
+
+    const $$resultImgContainer = document.getElementById('js-result_ImgContainer');
+    const $$resultDataEmotion = document.getElementById('js-result-Data-emotion');
+
     const ctx = $$canvas.getContext('2d');
 
     let videoSources;
@@ -35,22 +39,103 @@
     const fileChangeHandler = (e) => {
       e.preventDefault();
 
+      $$resourceFile.classList.remove('media-Resource-dragover');
+
       const target = e.dataTransfer || e.target;
       const file = target && target.files && target.files[0];
 
-      if (!file || file.type !== 'image/jpeg') {
+      if (!file || (file.type !== 'image/jpeg' && file.type !== 'image/png')) {
         alert('適切なファイルが指定されていません')
         return;
       }
-
-      console.log(file);
 
       // maxWidth: result.width(),
       // canvas: true,
       // pixelRatio: window.devicePixelRatio,
       // downsamplingRatio: 0.5,
       // orientation: true
+
+      loadImage(
+        file,
+        (canvas) => {
+          let img = document.createElement('img');
+          img.src = canvas.toDataURL('image/png');
+
+          while ($$resultImgContainer.firstChild) {
+            $$resultImgContainer.removeChild($$resultImgContainer.firstChild);
+          }
+          img.classList.add('result_Img', 'sw-Image-w_fluid');
+          $$resultImgContainer.appendChild(img);
+
+          (async () => {
+            const blob = await toBlob({ canvas });
+            const emotionResponse = await postEmotionAPI({ blob });
+
+            $$resultDataEmotion.innerHTML = JSON.stringify(emotionResponse.data, '', '    ');
+          })();
+        },
+        {
+          canvas: true,
+          downsamplingRatio: 0.5,
+          orientation: true
+        }
+      );
     }
+
+
+
+    /**
+     * --------------------------------------------------
+     * postEmotionAPI
+     *
+     * @typedef Keydata
+     * @type {Object}
+     * @property {Blob} Keydata.blob | 解析対象となるBlobオブジェクト
+     *
+     * @param {Keydata} keydata | 必須の引数
+     * @returns {Promise} API Response
+     */
+    const postEmotionAPI = (keydata) => {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'POST',
+          url: 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize',
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': EMOTION_API_KEY
+          },
+          data: keydata.blob
+        }).
+          then((response) => { resolve(response) }).
+          catch((error) => { resolve(error) });
+      });
+    }
+
+
+
+    /**
+     * --------------------------------------------------
+     * toBlob
+     *
+     * @typedef Keydata
+     * @type {Object}
+     * @property {HTMLCanvasElement} Keydata.canvas | blobデータを取得する<canvas>要素
+     *
+     * @param {Keydata} keydata.canvas | 必須の引数
+     * @returns {Promise} 引数に指定されたcanvasのBlobデータ
+     */
+    const toBlob = (keydata) => {
+      return new Promise((resolve, reject) => {
+        try {
+          keydata.canvas.toBlob((blob) => {
+            resolve(blob);
+          });
+        } catch (error) {
+          resolve(reject);
+        }
+      });
+    }
+
 
 
     /**
@@ -188,15 +273,18 @@
 
       $$resourceFile.addEventListener('dragover', (e) => {
         e.preventDefault();
+        $$resourceFile.classList.add('media-Resource-dragover');
         e.dataTransfer.dropEffect = 'copy';
       });
       $$resourceFile.addEventListener('dragleave', (e) => {
         e.preventDefault()
+        $$resourceFile.classList.remove('media-Resource-dragover');
       });
       $$resourceFile.addEventListener('drop', fileChangeHandler);
-
     }
 
+
+    _events();
 
     /**
      * cameraInitialized

@@ -60,10 +60,15 @@ $cDp-R0: #c9002f;
 
 
 
+.ex-main {
+  padding: 100px 0;
+}
+
 /* ============================================================================= */
 /*  .sw-SR-only                                                                  */
 /* ============================================================================= */
 .media_Outer {
+  margin: 0 0 80px;
 }
   .media {
   }
@@ -73,21 +78,33 @@ $cDp-R0: #c9002f;
       position: relative;
     }
       .media-Resources {
+        border: solid 1px $cMgy0;
         display: flex;
       }
         .media-Resource {
-          border: solid 1px $cMgy0;
           width: 426px;
           height: 240px;
           position: relative;
         }
+        /* &.media-Resource */
         .media-Resource-camera {
+          border-right: solid 1px $cMgy0;
         }
         .media-Resource-file {
+          // background-color: blue;
           .media-Resource_Inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            height: 100%;
           }
         }
+        .media-Resource-dragover {
+          border: solid 2px #4688f1;
+        }
+        /* End &.media-Resource */
 
           .media_File {
             background-color: $cW0;
@@ -131,9 +148,56 @@ $cDp-R0: #c9002f;
 
 
 
+/* ============================================================================= */
+/*  .result                                                                      */
+/* ============================================================================= */
+.result_Outer {
+  margin: 0 0 80px;
+}
+  .result {}
+    .result_Inner {
+      width: 852px;
+      margin: 0 auto;
+    }
+      .result_List {
+        border: solid 1px $cMgy0;
+        display: flex;
+        height: 400px;
+      }
+        .result_ImgContainer {
+          background-image: url(../shared/images/image-icon-0.png);
+          background-position: center;
+          border-right: solid 1px $cMgy0;
+          width: 50%;
+          height: 400px;
+          position: relative;
+        }
+          .result_Img {
+            position: relative;
+            top: 50%;
+            transform: translate(0, -50%);
+          }
 
+        .result-Data {
+          width: 50%;
+          height: 400px;
+          overflow: scroll;
+        }
+          .result-Data_Inner {
+            padding: 20px;
+          }
+/* ============================================================================= */
+/*  End .result                                                                  */
+/* ============================================================================= */
 
-
+.memo_Outer {
+  margin: 0 0 80px;
+}
+  .memo {}
+    .memo_Inner {
+      width: 852px;
+      margin: 0 auto;
+    }
 
 
 

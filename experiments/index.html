@@ -15,50 +15,73 @@
 </head>
 <body>
 
-  <div class="media_Outer">
-    <div class="media">
-      <div class="media_Inner">
-        <div class="media-Resources">
-          <div class="media-Resource media-Resource-camera">
-            <div class="cntl">
-              <div class="cntl_Inner">
-                <div class="cntl_BtnContainer">
-                  <button id="js-cntl_Btn-shooting" class="cntl_Btn cntl_Btn-shooting" type="button">
-                    <span class="cntl_BtnLabel">撮影</span>
-                  </button>
-                </div>
-                <!--
-                <div class="cntl_BtnContainer">
-                  <button id="js-cntl_Btn-toggle" class="cntl_Btn cntl_Btn-toggle" type="button">
-                    <span class="cntl_BtnLabel">カメラを切り替える</span>
-                  </button>
-                </div>
-                -->
-              </div><!-- /.cntl_Inner -->
-            </div><!-- /.cntl -->
-            <div class="sw-SR-only_">
+  <main class="ex-main">
+    <div class="media_Outer">
+      <div class="media">
+        <div class="media_Inner">
+          <p>解析する画像を撮影するか選択してください。</p>
+
+          <div class="media-Resources">
+            <div class="media-Resource media-Resource-camera">
+              <div class="cntl">
+                <div class="cntl_Inner">
+                  <div class="cntl_BtnContainer">
+                    <button id="js-cntl_Btn-shooting" class="cntl_Btn cntl_Btn-shooting" type="button">
+                      <span class="cntl_BtnLabel">撮影</span>
+                    </button>
+                  </div>
+                  <!--
+                  <div class="cntl_BtnContainer">
+                    <button id="js-cntl_Btn-toggle" class="cntl_Btn cntl_Btn-toggle" type="button">
+                      <span class="cntl_BtnLabel">カメラを切り替える</span>
+                    </button>
+                  </div>
+                  -->
+                </div><!-- /.cntl_Inner -->
+              </div><!-- /.cntl -->
               <canvas id="js-media_Canvas" class="media_Canvas"></canvas>
               <video id="js-media_Camera" class="media_Camera" autoplay playsinline></video>
+            </div><!-- /.media-Resource-camera -->
+
+            <div class="sw-SR-only_">
+              <div id="js-media-Resource-file" class="media-Resource media-Resource-file dbg-Border_">
+                <div class="media-Resource_Inner">
+                  <input id="js-media_File" class="media_File" type="file" accept="image/png, image/jpeg">
+                  <p>Or drag &amp; drop an image file</p>
+                </div><!-- /.media-Resource_Inner -->
+              </div><!-- /.media-Resource -->
             </div>
-          </div><!-- /.media-Resource-camera -->
-
-          <div class="sw-SR-only">
-            <div id="js-media-Resource-file" class="media-Resource media-Resource-file dbg-Border">
-              <div class="media-Resource_Inner">
-                <input id="js-media_File" class="media_File" type="file">
-                <p>Or drag &amp; drop an jpeg image file</p>
-              </div><!-- /.media-Resource_Inner -->
-            </div><!-- /.media-Resource -->
-          </div>
-        </div><!-- /.media-Resources -->
-      </div><!-- /.media_Inner -->
-    </div><!-- /.media -->
-  </div><!-- /.media_Outer -->
+          </div><!-- /.media-Resources -->
+        </div><!-- /.media_Inner -->
+      </div><!-- /.media -->
+    </div><!-- /.media_Outer -->
 
 
-  <div id="js-media_Src"></div>
-  <div id="js-media_Emotion"></div>
+    <div class="result_Outer">
+      <div class="result">
+        <div class="result_Inner">
+          <p>解析画像と結果は以下に表示されます。</p>
+          <div class="result_List">
+            <div id="js-result_ImgContainer" class="result_ImgContainer"></div>
+            <div class="result-Data">
+              <div class="result-Data_Inner">
+                <p>解析結果がここに表示されます</p>
+                <pre id="js-result-Data-emotion"></pre>
+              </div>
+            </div><!-- /.result-Data -->
+          </div><!-- /.result_List -->
+        </div><!-- /.result_Inner -->
+      </div><!-- /.result -->
+    </div><!-- /.result_Outer -->
 
+    <div class="memo_Outer">
+      <div class="memo">
+        <div class="memo_Inner">
+          <p>画像上の顔の位置（left, top）、大きさ（width, height）と表情の成分 anger（怒り）, contempt（軽蔑）, disgust（嫌悪感）, fear（恐れ）, happiness（笑顔）, neutral（無表情）, sadness（悲しみ）, surprise（驚き）を0〜1の範囲で取得することができる。この数字が大きいほどその成分が多く含まれる。</p>
+        </div><!-- /.memo_Inner -->
+      </div><!-- /.memo -->
+    </div><!-- /.memo_Outer -->
+  </main>
 
 </body>
 </html>
