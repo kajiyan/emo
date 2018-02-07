@@ -175,3 +175,6 @@ Word2Vecで単語ベクトルを取り、単語辞書から感情極性値を与
 - [Amazon、Google、IBM、Microsoftが公開する、AIを使うための「API」「ライブラリ」「実行環境」一覧](http://www.itmedia.co.jp/news/articles/1703/08/news072.html)
 
 - [Microsoft Cognitive Services API まとめ](https://qiita.com/daikiichikawa/items/1d9c0755b827ba5d24d4)
+
+- [Device 27　動画でグラニュラー合成をコントロール](http://rittor-music.jp/sound/magazine/max/60600)<br>
+動画（画像）から音を生成する例。
