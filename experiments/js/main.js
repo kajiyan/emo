@@ -70,8 +70,10 @@
           (async () => {
             const blob = await toBlob({ canvas });
             const emotionResponse = await postEmotionAPI({ blob });
+            const computerVisionResponse = await postComputerVision({ blob });
 
-            $$resultDataEmotion.innerHTML = JSON.stringify(emotionResponse.data, '', '    ');
+            $$resultDataEmotion.innerHTML = JSON.stringify(emotionResponse.data, '', '    ') + JSON.stringify(computerVisionResponse.data, '', '    ');
+            // $$resultDataEmotion.innerHTML = JSON.stringify(emotionResponse.data, '', '    ');
           })();
         },
         {
@@ -99,7 +101,7 @@
       return new Promise((resolve, reject) => {
         axios({
           method: 'POST',
-          url: 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize',
+          url: 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize?visualFeatures=Categories、Description',
           headers: {
             'Content-Type': 'application/octet-stream',
             'Ocp-Apim-Subscription-Key': EMOTION_API_KEY
@@ -111,6 +113,22 @@
       });
     }
 
+
+    const postComputerVision = (keydata) => {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'POST',
+          url: 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze',
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': '20365278a878447aa2bed97605602d32'
+          },
+          data: keydata.blob
+        }).
+          then((response) => { resolve(response) }).
+          catch((error) => { resolve(error) });
+      });
+    }
 
 
     /**
@@ -215,7 +233,7 @@
         */
 
         const pixelRatio = window.devicePixelRatio || 1.0;
-        const scaledImage = loadImage.scale($$canvas, {
+        const canvas = loadImage.scale($$canvas, {
           top: ($$canvas.height / 2) - (CROP_HEIGHT / 2),
           left: ($$canvas.width / 2) - (CROP_WIDTH / 2),
           sourceWidth: $$canvas.width,
@@ -225,29 +243,23 @@
           downsamplingRatio: 0.5
         });
 
-        scaledImage.toBlob((blob) => {
-          axios({
-            method: 'POST',
-            url: 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize',
-            headers: {
-              'Content-Type': 'application/octet-stream',
-              // 'Content-Type': 'application/json',
-              'Ocp-Apim-Subscription-Key': EMOTION_API_KEY
-            },
-            data: blob
-          }).
-            then((response) => {
-              console.log(response);
-            }).
-            catch((error) => {
-              console.log(error);
-            });
-        });
+        (async () => {
+          const blob = await toBlob({ canvas });
+          const emotionResponse = await postEmotionAPI({ blob });
+          const computerVisionResponse = await postComputerVision({ blob });
+
+          $$resultDataEmotion.innerHTML = JSON.stringify(emotionResponse.data, '', '    ') + JSON.stringify(computerVisionResponse.data, '', '    ');
+        })();
 
         let img = document.createElement('img');
-        img.src = scaledImage.toDataURL('image/png');
+        img.classList.add('result_Img', 'sw-Image-w_fluid');
+        img.src = canvas.toDataURL('image/png');
 
-        document.getElementById('js-media_Src').appendChild(img);
+        while ($$resultImgContainer.firstChild) {
+          $$resultImgContainer.removeChild($$resultImgContainer.firstChild);
+        }
+
+        $$resultImgContainer.appendChild(img);
       });
 
 
@@ -283,8 +295,6 @@
       $$resourceFile.addEventListener('drop', fileChangeHandler);
     }
 
-
-    _events();
 
     /**
      * cameraInitialized
